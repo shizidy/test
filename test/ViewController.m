@@ -147,9 +147,35 @@
     }
     marray[i] = [NSString stringWithFormat:@"%ld", key];//把基准数放在正确的位置
     //递归
-    [self quicksortArrayWithoriginArray:marray leftIndex:leftIndex rightIndex:i-1];//排序基准数左边的
-    [self quicksortArrayWithoriginArray:marray leftIndex:i+1 rightIndex:rightIndex];//排序基准数右边的
+    [self quicksortArrayWithoriginArray:marray leftIndex:leftIndex rightIndex:i - 1];//排序基准数左边的
+    [self quicksortArrayWithoriginArray:marray leftIndex:i + 1 rightIndex:rightIndex];//排序基准数右边的
 }
+
+void quick_sort(int s[], int l, int r) {
+    if (l < r) {
+        int i = l, j = r, x = s[i];
+        while (i < j) {
+            while (i < j && s[j] >= x) {
+                j--;
+            }
+            if (i < j) {
+                s[i] = s[j];
+            }
+            while (i < j && s[i] < x) {
+                i++;
+            }
+            if (i < j) {
+                s[j] = s[i];
+            }
+        }
+        s[i] = x;
+        quick_sort(s, l, i - 1);
+        quick_sort(s, i + 1, r);
+    }
+}
+
+
+
 #pragma mark ========== 去重 ==========
 -(void)quchongMethod {//去除字符串不相邻的重复字符
     NSMutableString *str1 = [[NSMutableString alloc] initWithString:@"aaadfghaeectem"];
