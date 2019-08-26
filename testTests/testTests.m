@@ -7,13 +7,18 @@
 //
 
 #import <XCTest/XCTest.h>
-
+//#import "ViewController.h"
 @interface testTests : XCTestCase
-
+//@property (nonatomic, strong) ViewController *vc;
 @end
 
 @implementation testTests
-
+//-(ViewController *)vc{
+//    if (_vc==nil) {
+//        _vc = [[ViewController alloc] init];
+//    }
+//    return _vc;
+//}
 - (void)setUp {
     [super setUp];
     // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -25,6 +30,8 @@
 }
 
 - (void)testExample {
+//    [self.vc quchongMethod];
+//    [self.vc maopaoSortArray];
     // This is an example of a functional test case.
     // Use XCTAssert and related functions to verify your tests produce the correct results.
 }

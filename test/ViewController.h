@@ -10,6 +10,9 @@
 
 @interface ViewController : UIViewController
 
-
+-(NSArray *)getMaxArrayWithoriginArray:(NSArray *)array;
+-(void)quchongMethod;
+-(void)maopaoSortArray;
+-(void)xuanzeSortArray;
 @end
 
