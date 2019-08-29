@@ -17,7 +17,7 @@
 @property (nonatomic, strong) UILabel *textLabel;
 @end
 @implementation ViewController
-//-(void)loadView{//此方法必须为self.view指定一个view
+//-(void)loadView {//此方法必须为self.view指定一个view
 //    UIView *bgView = [[UIView alloc] init];
 //    self.view = bgView;
 //    bgView.backgroundColor = [UIColor orangeColor];
@@ -51,23 +51,23 @@
 //    [self.view addSubview:drawView];
     
     
-    self.textLabel = [[UILabel alloc] init];
-//    [self.view addSubview:self.textLabel];
-    [self.textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.edges.equalTo(self.view).with.insets(UIEdgeInsetsMake(10, 10, 500, 200));
-        make.center.equalTo(self.view);
-         //设置宽度小于等于200
-        make.width.lessThanOrEqualTo(@200);
-         //设置高度大于等于10
-        make.height.greaterThanOrEqualTo(@(10));
-    }];
+//    self.textLabel = [[UILabel alloc] init];
+////    [self.view addSubview:self.textLabel];
+//    [self.textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+//        make.edges.equalTo(self.view).with.insets(UIEdgeInsetsMake(10, 10, 500, 200));
+//        make.center.equalTo(self.view);
+//         //设置宽度小于等于200
+//        make.width.lessThanOrEqualTo(@200);
+//         //设置高度大于等于10
+//        make.height.greaterThanOrEqualTo(@(10));
+//    }];
+//
+////    self.textLabel.text = @"这是测试的字符串。能看到1、2、3个步骤，第一步当然是上传照片了，要上传正面近照哦。上传后，网站会自动识别你的面部，如果觉得识别的不准，你还可以手动修改一下。左边可以看到16项修改参数，最上面是整体修改，你也可以根据自己的意愿单独修改某项，将鼠标放到选项上面，右边的预览图会显示相应的位置。";
+////    self.textLabel.numberOfLines = 0;
+//    self.textLabel.backgroundColor = [UIColor orangeColor];
     
-//    self.textLabel.text = @"这是测试的字符串。能看到1、2、3个步骤，第一步当然是上传照片了，要上传正面近照哦。上传后，网站会自动识别你的面部，如果觉得识别的不准，你还可以手动修改一下。左边可以看到16项修改参数，最上面是整体修改，你也可以根据自己的意愿单独修改某项，将鼠标放到选项上面，右边的预览图会显示相应的位置。";
-//    self.textLabel.numberOfLines = 0;
-    self.textLabel.backgroundColor = [UIColor orangeColor];
     
-    
-    
+    [self binarySearch];
     
     
     // Do any additional setup after loading the view, typically from a nib.
@@ -174,6 +174,67 @@ void quick_sort(int s[], int l, int r) {
     }
 }
 
+#pragma mark ========== 二分查找 ==========
+//二分查找优点：不用遍历全部数据
+/*
+ 1> 数组必须是有序的
+ 2> 必须已知min和max（知道范围）
+ 3> 动态计算mid的值，取出mid对应的值进行比较
+ 4> 如果mid对应的值大于要查找的值，那么max要变小为mid-1
+ 5> 如果mid对应的值小于要查找的值，那么min要变大为mid+1
+ */
+
+- (void)binarySearch {
+    NSArray *array = @[@1, @12, @23, @43, @54, @123];
+    NSNumber *number = @44;
+    NSInteger min = 0;
+    NSInteger max = array.count - 1;
+    NSInteger mid = 0;
+    BOOL isFinded = NO;
+    while (min <= max) {
+        mid = (min + max) / 2;
+        if ([number integerValue] > [array[mid] integerValue]) {
+            min = mid + 1;
+        } else if ([number integerValue] < [array[mid] integerValue]) {
+            max = mid - 1;
+        } else {
+            NSLog(@"%@的下标是%ld", number, (long)mid);
+            isFinded = YES;
+            break;
+        }
+    }
+    if (!isFinded) {
+        NSLog(@"%@不在此数组内", number);
+    }
+}
+
+int findKey(int *arr, int length, int key) {
+    int min = 0,max = length - 1, mid;
+    while (min <= max) {
+        mid = (min + max) / 2;
+        if (key > arr[mid]) {
+            min = mid + 1;
+        } else if (key < arr[mid]) {
+            max = mid - 1;
+        } else {
+            return mid;
+        }
+    }
+    return -1;
+}
+
+#pragma mark ========== 希尔排序 ==========
+- (void)xierSortArray {
+    NSMutableArray *array = [@[@23, @54, @1, @43, @123, @12] mutableCopy];
+    NSInteger n = array.count;
+    for (NSInteger gap = n / 2; gap > 0; gap /= 2) {
+        for (NSInteger i = gap; i < n; i++) {
+            for (NSInteger j = i - gap; j >= 0 && [array[j] integerValue] > [array[j + gap] integerValue]; j -= gap) {
+                [array exchangeObjectAtIndex:j withObjectAtIndex:j + gap];
+            }
+        }
+    }
+}
 
 
 #pragma mark ========== 去重 ==========
